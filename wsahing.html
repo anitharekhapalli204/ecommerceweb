@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Images</title>
+    <style>
+        /* Styles remain the same as your original */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .headline {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #d9534f;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .image-card {
+            position: relative;
+            width: 250px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-card:hover {
+            transform: scale(1.05);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .details {
+            padding: 10px;
+        }
+
+        .details .price {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .details .price .real-price {
+            text-decoration: line-through;
+            color: #dc3545;
+        }
+
+        .details .price .discount-price {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .requirements {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .cart-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon img {
+            width: 70%;
+            height: 70%;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc3545;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+        }
+        .add-to-cart {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #218838;
+        }
+
+        .add-to-cart:active {
+            background-color: #1e7e34;
+        }
+        .button-container {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+  
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="headline">Washing Machines</div>
+
+<div class="container">
+    <div class="image-card">
+        <img src="wash1.jpg" alt="LG Washing Machine">
+        <div class="details">
+            <div class="price">
+                <span class="real-price">₹22000</span>
+                <span class="discount-price">₹20000</span>
+            </div>
+            <div class="requirements">
+                <strong>Brand:</strong> LG<br>
+                <strong>Type:</strong> Front Load 6 Kg<br>
+                <strong>Features:</strong> Inverter Direct Drive Motor, 6 Motion Control<br>
+            </div>
+        </div>
+    </div>
+    <div class="image-card">
+        <img src="wash2.webp" alt="Samsung Washing Machine">
+        <div class="details">
+            <div class="price">
+                <span class="real-price">₹18000</span>
+                <span class="discount-price">₹14000</span>
+            </div>
+            <div class="requirements">
+                <strong>Brand:</strong> Samsung<br>
+                <strong>Type:</strong> Top Load 7 Kg<br>
+                <strong>Features:</strong> Diamond Drum Technology, Center Jet Pulsator<br>
+            </div>
+        </div>
+    </div>
+    <div class="image-card">
+        <img src="wash3.avif" alt="Whirlpool Washing Machine">
+        <div class="details">
+            <div class="price">
+                <span class="real-price">₹17000</span>
+                <span class="discount-price">₹16350</span>
+            </div>
+            <div class="requirements">
+                <strong>Brand:</strong> Whirlpool<br>
+                <strong>Type:</strong> Semi-Automatic 6.5 Kg<br>
+                <strong>Features:</strong> Turbo Scrub, Rust-Free Body<br>
+            </div>
+        </div>
+    </div>
+    <div class="image-card">
+        <img src="wsah4.jpg" alt="IFB Washing Machine">
+        <div class="details">
+            <div class="price">
+                <span class="real-price">₹12000</span>
+                <span class="discount-price">₹8600</span>
+            </div>
+            <div class="requirements">
+                <strong>Brand:</strong> IFB<br>
+                <strong>Type:</strong> Fully Automatic 6 Kg<br>
+                <strong>Features:</strong> Aqua Energie, Auto Balance System<br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="sizeChartModal">
+    <div class="modal-content">
+        <h3>Add this item to your cart?</h3>
+        <a href="#" class="add-to-cart" onclick="addToCart()">Add to Cart</a>
+    </div>
+</div>
+
+<div class="cart-icon">
+    <img src="cart.webp" alt="Cart Icon">
+    <div class="cart-count" id="cartCount">0</div>
+</div>
+<div class="button-container">
+    <a href="index1.html" class="button">Go to Home_page</a>
+  </div>
+
+<script>
+    const modal = document.getElementById('sizeChartModal');
+    const cartCountElement = document.getElementById('cartCount');
+    let cartCount = 0;
+
+    function showModal() {
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function addToCart() {
+        cartCount++;
+        cartCountElement.textContent = cartCount;
+        closeModal();
+    }
+
+    // Attach click listeners to images
+    document.querySelectorAll('.image-card img').forEach(image => {
+        image.addEventListener('click', showModal);
+    });
+
+    // Close modal when clicking outside it
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+</script>
+
+</body>
+</html>
