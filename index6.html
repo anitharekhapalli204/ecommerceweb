@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Zone</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #213e88;
+            color: white;
+        }
+
+        #couponZone {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #couponZone input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 60%;
+        }
+
+        #couponZone button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #213e88;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #couponZone button:hover {
+            background-color: #415ea8;
+        }
+
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            width: 200px;
+            position: relative;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .product button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #213e88;
+            color: white;
+            width: 100%;
+        }
+
+        .product button:hover {
+            background-color: #415ea8;
+        }
+
+        .size-chart {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .size-chart button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #213e88;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .size-chart button:hover {
+            background-color: #415ea8;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        #cart {
+            display: flex;
+            align-items: center;
+            background-color: #213e88;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #cartCount {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        #cart img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        .product[data-product="8"],
+        .product[data-product="9"],
+        .product[data-product="10"] {
+            width: 200px; /* Reduced width for 8, 9, 10 */
+            height: 350px; /* Reduced height */
+        }
+        .button-container {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+  
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+    </style>
+    <script>
+        let cartCount = 0;
+
+        function applyCoupon() {
+            const coupon = document.getElementById("couponInput").value.toLowerCase();
+            const discount = coupon === "save10" ? 10 : 0; // 10% off for "SAVE10" coupon
+            const products = document.querySelectorAll(".product");
+
+            products.forEach(product => {
+                const realPrice = parseFloat(product.getAttribute("data-real-price"));
+                const discountedPrice = discount > 0 ? (realPrice - (realPrice * discount) / 100).toFixed(2) : realPrice;
+                product.querySelector(".discounted-price").innerText = `${discountedPrice}`;  // Removed $ symbol
+            });
+
+            if (discount > 0) {
+                alert("Coupon applied successfully!");
+            } else {
+                alert("Invalid coupon code!");
+            }
+        }
+
+        function showSizeChart(imageId) {
+            document.getElementById(`sizeChart-${imageId}`).style.display = 'block';
+        }
+
+        function addToCart() {
+            cartCount++;
+            document.getElementById("cartCount").innerText = cartCount;
+        }
+
+        function hideSizeChart(imageId) {
+            document.getElementById(`sizeChart-${imageId}`).style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Coupon Zone</h1>
+    </header>
+
+    <section id="couponZone">
+        <h2>Apply Coupon</h2>
+        <input type="text" id="couponInput" placeholder="Enter coupon code(save10)">
+        <button onclick="applyCoupon()">Apply</button>
+    </section>
+
+    <main>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product" data-real-price="50">
+                <img src="cu1.jpg" alt="Product 1">
+                <p>Real Price: <span class="real-price">500</span></p>
+                <p>Coupon Price: <span class="discounted-price">400</span></p>
+                <button onclick="showSizeChart(1)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-1" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(1)">Close</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product" data-real-price="70">
+                <img src="cu2.jpg" alt="Product 2">
+                <p>Real Price: <span class="real-price">700</span></p>
+                <p>Coupon Price: <span class="discounted-price">600</span></p>
+                <button onclick="showSizeChart(2)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-2" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(2)">Close</button>
+                </div>
+            </div>
+            <div class="product" data-real-price="70">
+                <img src="cu3.jpg" alt="Product 3">
+                <p>Real Price: <span class="real-price">600</span></p>
+                <p>Coupon Price: <span class="discounted-price">500</span></p>
+                <button onclick="showSizeChart(3)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-3" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(3)">Close</button>
+                </div>
+            </div>
+            <div class="product" data-real-price="70">
+                <img src="cu4.jpg" alt="Product 2">
+                <p>Real Price: <span class="real-price">500</span></p>
+                <p>Coupon Price: <span class="discounted-price">400</span></p>
+                <button onclick="showSizeChart(4)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-4" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(4)">Close</button>
+                </div>
+            </div>
+            <div class="product" data-real-price="70">
+                <img src="cu5.jpg" alt="Product 5">
+                <p>Real Price: <span class="real-price">400</span></p>
+                <p>Coupon Price: <span class="discounted-price">350</span></p>
+                <button onclick="showSizeChart(5)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-5" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(5)">Close</button>
+                </div>
+            </div>
+            <div class="product" data-real-price="70">
+                <img src="cu6.webp" alt="Product 2">
+                <p>Real Price: <span class="real-price">700</span></p>
+                <p>Coupon Price: <span class="discounted-price">600</span></p>
+                <button onclick="showSizeChart(6)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-6" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(6)">Close</button>
+                </div>
+            </div>
+            <div class="product" data-real-price="70">
+                <img src="cu7.webp" alt="Product 2">
+                <p>Real Price: <span class="real-price">700</span></p>
+                <p>Coupon Price: <span class="discounted-price">600</span></p>
+                <button onclick="showSizeChart(7)">Size Chart</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <div id="sizeChart-7" class="size-chart">
+                    <p>Select a Size:</p>
+                    <button onclick="alert('Small')">S</button>
+                    <button onclick="alert('Medium')">M</button>
+                    <button onclick="alert('Large')">L</button>
+                    <button onclick="alert('XL')">XL</button>
+                    <button onclick="alert('XXL')">XXL</button>
+                    <button onclick="hideSizeChart(7)">Close</button>
+                </div>
+             
+            </div>
+            <!-- Product 8 to 10 with reduced layout size -->
+            <div class="product" data-real-price="800" data-product="8">
+                <img src="cu8.jpg" alt="Product 8">
+                <p>Real Price: <span class="real-price">800</span></p>
+                <p>Coupon Price: <span class="discounted-price">750</span></p>
+                
+                <button onclick="addToCart()">Add to Cart</button>
+             
+            </div>
+            <div class="product" data-real-price="900" data-product="9">
+                <img src="cu9.webp" alt="Product 9">
+                <p>Real Price: <span class="real-price">900</span></p>
+                <p>Coupon Price: <span class="discounted-price">850</span></p>
+              
+                <button onclick="addToCart()">Add to Cart</button>
+             
+            </div>
+            <div class="product" data-real-price="1000" data-product="10">
+                <img src="cu10.jpg" alt="Product 10">
+                <p>Real Price: <span class="real-price">1000</span></p>
+                <p>Coupon Price: <span class="discounted-price">950</span></p>
+                
+                <button onclick="addToCart()">Add to Cart</button>
+               
+                
+            </div>
+            
+                
+              
+
+
+          
+            <!-- Add your remaining product sections here -->
+
+        </div>
+    </main>
+    <div class="button-container">
+        <a href="index1.html" class="button">Go to Home_page</a>
+      </div>
+
+    <footer>
+        <div id="cart">
+            <img src="cart.webp" alt="Cart Icon">
+            <span id="cartCount">0</span>
+            <span>Cart</span>
+        </div>
+    </footer>
+</body>
+</html>

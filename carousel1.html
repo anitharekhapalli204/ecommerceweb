@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .headline {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #d9534f;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .image-card {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .image-card:hover {
+            transform: scale(1.05);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 90%;
+            object-fit: cover;
+        }
+
+        .price {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .price .real-price {
+            text-decoration: line-through;
+            color: #dc3545;
+            margin-right: 10px;
+        }
+
+        .price .discount-price {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+        }
+
+        .sizes {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .sizes button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sizes button.selected {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .sizes button:hover {
+            background-color: #0056b3;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #218838;
+        }
+
+        .add-to-cart:active {
+            background-color: #1e7e34;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .cart-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon img {
+            width: 70%;
+            height: 70%;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc3545;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .button-container {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+  
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+<div class="headline">50% Discount Here</div>
+
+<div class="container">
+    <div class="image-card" onclick="showModal()">
+        <img src="dis.jpg" alt="Discount Item 1">
+        <div class="price">
+            <span class="real-price">1000</span>
+            <span class="discount-price">500</span>
+        </div>
+    </div>
+    <div class="image-card" onclick="showModal()">
+        <img src="dis2.jpg" alt="Discount Item 2">
+        <div class="price">
+            <span class="real-price">800</span>
+            <span class="discount-price">400</span>
+        </div>
+    </div>
+    <div class="image-card" onclick="showModal()">
+        <img src="dis3.jpg" alt="Discount Item 3">
+        <div class="price">
+            <span class="real-price">700</span>
+            <span class="discount-price">350</span>
+        </div>
+    </div>
+    <div class="image-card" onclick="showModal()">
+        <img src="dis4.jpg" alt="Discount Item 3">
+        <div class="price">
+            <span class="real-price">1200</span>
+            <span class="discount-price">600</span>
+        </div>
+    </div>
+    <div class="image-card" onclick="showModal()">
+        <img src="dis5.jpg" alt="Discount Item 3">
+        <div class="price">
+            <span class="real-price">1200</span>
+            <span class="discount-price">600</span>
+        </div>
+    </div>
+    <div class="image-card" onclick="showModal()">
+        <img src="dis6.jpg" alt="Discount Item 3">
+        <div class="price">
+            <span class="real-price">1000</span>
+            <span class="discount-price">500</span>
+        </div>
+    </div>
+    <div class="image-card" onclick="showModal()">
+        <img src="dis7.jpg" alt="Discount Item 3">
+        <div class="price">
+            <span class="real-price">1200</span>
+            <span class="discount-price">600</span>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="sizeChartModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Select Size</h3>
+        <div class="sizes">
+            <button onclick="selectSize(this, 'S')">S</button>
+            <button onclick="selectSize(this, 'M')">M</button>
+            <button onclick="selectSize(this, 'L')">L</button>
+            <button onclick="selectSize(this, 'XL')">XL</button>
+            <button onclick="selectSize(this, 'XXL')">XXL</button>
+        </div>
+      
+        <a href="#" class="add-to-cart" onclick="addToCart()">Add to Cart</a>
+    </div>
+</div>
+
+<div class="cart-icon" onclick="viewCart()">
+    <img src="cart.webp" alt="Cart Icon">
+    <div class="cart-count" id="cartCount">0</div>
+</div>
+<div class="button-container">
+    <a href="index1.html" class="button">Go to Home_page</a>
+  </div>
+
+<script>
+    const modal = document.getElementById('sizeChartModal');
+    const cartCountElement = document.getElementById('cartCount');
+    let cartCount = 0;
+
+    function showModal() {
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function addToCart() {
+        cartCount++;
+        cartCountElement.textContent = cartCount;
+        closeModal();
+    }
+
+    function selectSize(button, size) {
+        document.querySelectorAll('.sizes button').forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        console.log(`Size selected: ${size}`);
+    }
+
+    function viewCart() {
+        alert(`You have ${cartCount} items in your cart.`);
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+    function addToCartAndClose() {
+    const item = {
+        image: document.getElementById('popupImage').src,
+        title: document.getElementById('popupTitle').innerText,
+        price: document.getElementById('popupPrice').innerText,
+    };
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(item);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    cartCount++;
+    document.getElementById('cartCount').innerText = cartCount;
+    document.getElementById('cartIcon').style.display = 'block';
+    document.getElementById('popup').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

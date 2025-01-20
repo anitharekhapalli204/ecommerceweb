@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1em;
+            color: #777;
+        }
+
+        /* Hidden state for the form and thank you message */
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            font-size: 1.5em;
+            color: #4caf50;
+        }
+
+        .contact-form {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Contact Us</h1>
+            <p>We would love to hear from you! Please fill out the form below to get in touch.</p>
+        </header>
+
+        <!-- Thank You message -->
+        <div class="thank-you-message" id="thank-you-message">
+            <p>Thank you for reaching out! We will get back to you soon.</p>
+            <p>You will be redirected to the homepage shortly.</p>
+        </div>
+
+        <!-- Contact Form -->
+        <section class="contact-form" id="contact-form">
+            <form id="contact-us-form" onsubmit="return handleFormSubmit(event)">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+
+        <footer>
+            <p>Contact Information: <br> Email: example@example.com <br> Phone: (123) 456-7890</p>
+        </footer>
+    </div>
+
+    <script>
+        // Function to handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Hide the form and show the thank you message
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
+
+            // Redirect to the homepage after 3 seconds
+            setTimeout(function() {
+                window.location.href = 'index1.html'; // Change this URL to your homepage
+            }, 3000); // Redirect after 3 seconds
+        }
+    </script>
+</body>
+</html>

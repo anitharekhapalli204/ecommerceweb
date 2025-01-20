@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .cart-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .cart-item-title {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .cart-item-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .remove-btn {
+            background-color: #FF4C4C;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .remove-btn:hover {
+            background-color: #FF1C1C;
+        }
+
+        .checkout-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .checkout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .address-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .address-form input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .address-form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .address-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .order-success {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 30px;
+            color: green;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="title">Your Cart</div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+    
+            <div class="total-cost">
+                <h3>Total Cost: ₹<span id="totalCost">0</span></h3>
+            </div>
+    
+            <button class="checkout-btn" onclick="showAddressForm()">Proceed to Checkout</button>
+    
+            <!-- Address Form -->
+            <div class="address-form" id="addressForm" style="display:none;">
+                <input type="text" id="address" placeholder="Enter your address" required>
+                <button onclick="placeOrder()">Place Order</button>
+            </div>
+    
+            <!-- Order Success -->
+            <div class="order-success" id="orderSuccess">
+                <p>Your order has been placed successfully!</p>
+            </div>
+        </div>
+    
+        <script>
+            // Load cart items from localStorage
+            function loadCartItems() {
+                const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartItemsContainer = document.getElementById('cartItems');
+                cartItemsContainer.innerHTML = '';
+    
+                if (cartItems.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>Your cart is empty!</p>';
+                    return;
+                }
+    
+                let totalCost = 0;
+    
+                cartItems.forEach((item, index) => {
+                    const cartItemDiv = document.createElement('div');
+                    cartItemDiv.className = 'cart-item';
+                    cartItemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-price">${item.price}</div>
+                        <button class="remove-btn" onclick="removeCartItem(${index})">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItemDiv);
+    
+                    // Add the price to the total cost (strip ₹ and parse as float)
+                    totalCost += parseFloat(item.price.replace('₹', ''));
+                });
+    
+                // Display the total cost
+                document.getElementById('totalCost').innerText = totalCost.toFixed(2);
+            }
+    
+            // Remove item from cart
+            function removeCartItem(index) {
+                const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+                cartItems.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cartItems));
+                loadCartItems();
+            }
+    
+            // Show the address form
+            function showAddressForm() {
+                const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+                if (cartItems.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                document.getElementById('addressForm').style.display = 'block';
+            }
+    
+            // Place the order
+            function placeOrder() {
+                const address = document.getElementById('address').value.trim();
+                if (!address) {
+                    alert('Please enter your address!');
+                    return;
+                }
+    
+                // Simulate placing the order
+                const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+                alert(`Order placed successfully!\nTotal Cost: ₹${document.getElementById('totalCost').innerText}\nAddress: ${address}`);
+    
+                // Clear the cart and show order success message
+                localStorage.removeItem('cart');
+                document.getElementById('addressForm').style.display = 'none';
+                document.getElementById('orderSuccess').style.display = 'block';
+                loadCartItems();
+            }
+    
+            // Load cart items on page load
+            window.onload = loadCartItems;
+        </script>
+    </body>
+    </html>

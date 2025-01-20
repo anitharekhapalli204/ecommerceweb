@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessories</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Product Grid */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-icon:hover {
+            background-color: #0056b3;
+        }
+
+        .cart-icon .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: bold;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-content img {
+            width: 300px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .size-chart {
+            margin-bottom: 15px;
+        }
+
+        .size-chart h4 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .size-chart span {
+            margin: 5px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .size-chart span:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .size-chart span.selected {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .add-to-cart-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Close Button */
+        .popup-content button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .popup-content button:hover {
+            background-color: #ddd;
+        }
+        .button-container {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+  
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">Women's Wear</div>
+        <div class="products">
+            <!-- Product List -->
+            <div class="product" onclick="showProductDetails('women1.jpg', 'dress', '₹799')">
+                <img src="women1.jpg" alt="Scarf">
+                <div class="product-title">dress</div>
+                <div class="price">₹799</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women2.avif', 'shirt', '₹1499')">
+                <img src="women2.avif" alt="Sunglasses">
+                <div class="product-title">shirt</div>
+                <div class="price">₹1499</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women3.webp', 'skirt', '₹1299')">
+                <img src="women3.webp" alt="Wallet">
+                <div class="product-title">skirt</div>
+                <div class="price">₹1299</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women4.jpg', 'Blazer', '₹4999')">
+                <img src="women4.jpg" alt="Watch">
+                <div class="product-title">Blazer</div>
+                <div class="price">₹4999</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women5.jpg', 'tshirt', '₹999')">
+                <img src="women5.jpg" alt="Belt">
+                <div class="product-title">tshirt</div>
+                <div class="price">₹999</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women6.jpg', 'Denim jacket', '₹2499')">
+                <img src="women6.jpg" alt="Handbag">
+                <div class="product-title">Denim jacket</div>
+                <div class="price">₹2499</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women7.jpg','western top' ,'₹1599')">
+                <img src="women7.jpg" alt="Necklace">
+                <div class="product-title">western top</div>
+                <div class="price">₹1599</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women8.webp', 'plazo', '₹799')">
+                <img src="women8.webp" alt="Bracelet">
+                <div class="product-title">plazo</div>
+                <div class="price">₹799</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women9.jpg', 'dress', '₹1199')">
+                <img src="women9.jpg" alt="Hat">
+                <div class="product-title">dress</div>
+                <div class="price">₹1199</div>
+            </div>
+            <div class="product" onclick="showProductDetails('women10.jpg', 'track pant', '₹699')">
+                <img src="women10.jpg" alt="Earrings">
+                <div class="product-title">track pant</div>
+                <div class="price">₹699</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Icon -->
+    <div class="cart-icon" id="cartIcon" onclick="viewCart()">
+        🛒
+        <div class="cart-count" id="cartCount">0</div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <img id="popupImage" src="" alt="Product">
+            <h4 id="popupTitle"></h4>
+            <p id="popupPrice"></p>
+        
+            <button class="add-to-cart-btn" onclick="addToCartAndClose()">Add to Cart</button>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    <div class="button-container">
+        <a href="index1.html" class="button">Go to Home_page</a>
+      </div>
+
+    <script>
+        let cartCount = 0;
+
+        function showProductDetails(image, title, price) {
+    document.getElementById('popupImage').src = image;
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupPrice').innerText = price;
+    document.getElementById('popup').style.display = 'flex';
+}
+
+        function selectSize(sizeElement) {
+            document.querySelectorAll('.size-chart span').forEach(size => size.classList.remove('selected'));
+            sizeElement.classList.add('selected');
+        }
+
+        function addToCartAndClose() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+            document.getElementById('cartIcon').style.display = 'block';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function viewCart() {
+            alert(`You have ${cartCount} items in your cart.`);
+        }
+        function addToCartAndClose() {
+    const item = {
+        image: document.getElementById('popupImage').src,
+        title: document.getElementById('popupTitle').innerText,
+        price: document.getElementById('popupPrice').innerText,
+    };
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(item);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    cartCount++;
+    document.getElementById('cartCount').innerText = cartCount;
+    document.getElementById('cartIcon').style.display = 'block';
+    document.getElementById('popup').style.display = 'none';
+}
+
+</script>
+      
+
+</script>
+
+</body>
+</html>
