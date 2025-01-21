@@ -1,514 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Stop Shopping</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #f8f8f8;
-            padding: 5px 20px;
-            border-bottom: 0.5px solid #ccc;
-        }
-
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 10px;
-        }
-
-        .logo {
-            height: 70px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.2);
-        }
-
-        .tagline {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-top: 5px;
-        }
-
-        .navbar {
-            display: flex;
-        }
-
-        .navbar a {
-            text-decoration: none;
-            margin: 0 15px;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .navbar a:hover {
-            color: #007BFF;
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar input[type="text"] {
-            width: 400px;
-            height: 40px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-        }
-
-        .search-bar button {
-            padding: 5px;
-            margin-left: -35px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            color: #666;
-        }
-
-        .essentials {
-            display: flex;
-        }
-
-        .essentials a {
-            margin-left: 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .essentials a:hover {
-            color: #007BFF;
-        }
-
-        /* Carousel Styles */
-        .carousel {
-            position: relative;
-            width: 950px;
-            max-width: 1200px;
-            height: 460px;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-
-        .carousel img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .dots {
-            position: absolute;
-            bottom: 130px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-        }
-
-        .dot {
-            height: 10px;
-            width: 10px;
-            margin: 0 5px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.3s;
-            cursor: pointer;
-        }
-
-        .active {
-            background-color: #007BFF;
-        }
-
-        .carousel .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px 15px;
-            border-radius: 50%;
-            font-size: 18px;
-        }
-
-        .carousel .arrow.left {
-            left: 10px;
-        }
-
-        .carousel .arrow.right {
-            right: 10px;
-        }
-
-        /* Coupon Zone Section */
-        .coupon-zone {
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 30px;
-            height: 400px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .coupon-content {
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .coupon-content img {
-            width: 500px;
-            height: auto;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .coupon-content img:hover {
-            transform: scale(1.05);
-        }
-
-        .coupon-content h1 {
-            font-size: 24px;
-            color: #333;
-            margin-top: 10px;
-            visibility: visible;
-            padding-bottom: 15px;
-        }
-
-        .coupon-content p {
-            font-size: 16px;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        .coupon-content button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .coupon-content button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Shop by Category Section */
-        .shop-by-category {
-            margin: 40px 0;
-            text-align: left;
-            padding-left: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .categories {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .categories a {
-            text-decoration: none;
-        }
-
-        .categories img {
-            width: 250px;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 8px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .categories img:hover {
-            transform: scale(1.1);
-        }
-        .cart-icon {
-            font-size: 13px;
-            color: #333;
-            cursor: pointer;
-            margin-left: 15px; /* Space between cart and other icons */
-        }
-     
-        #searchForm {
-    margin-top: 10px;
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Align items vertically */
-    justify-content: center; /* Center the form horizontally */
-    gap: 10px; /* Space between button and input */
-    margin-left: 50px;
-}
-
-#searchForm input[type="text"] {
-    width: 95%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#searchForm button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #213e88;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100px;
-}
-
-#searchForm button:hover {
-    background-color: #415ea8; /* Slightly different color on hover */
-}
-
-/* Main Content Styling */
-#mainContent {
-    margin: 20px auto;
-    text-align: center;
-    max-width: 80%;
-}
-
-#mainContent p {
-    font-size: 1.2rem;
-    margin-top: 10px;
-}
-
-/* Highlight Keywords */
-#mainContent strong { 
-    color: #007bff;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #searchForm {
-        flex-direction: column; /* Stack items vertically on small screens */
-    }
-
-    #searchForm input[type="text"],
-    #searchForm button {
-        width: 100%; /* Full-width for small screens */
-    }
-
-    #searchForm button {
-        margin-top: 10px;
-    }
-}
+   <meta charset="UTF-8">
+   <meta name=""viewport" content="width=device-width,initial-scale=1.0">
+   <title>Master in learning code</title>
+   <link rel="stylesheet" href="styles.css">
+   </head>
+   
+   <body>
+    
+    
+    <header class="navbar">
+        <button class="image-button" onclick="alert('Button Clicked!')">
+            <img src="StudyZone.jpg" alt="Button Image"> <!-- Replace 'your-image.jpg' with your image path -->
+        </button>
+        <div class="logo">    Study Zone</div>
+        <nav>
+            <ul>
+               
+                <li><a href="index1.html" target="_blank">Home</a><li></li>
+                <!-- Link to specific YouTube video for C++ programming -->
+                
+                <li><a href="index2.html" target="_blank">Courses</a></li>
 
 
-    </style>
-</head>
-<body>
-    <!-- Header Section -->
-    <div class="header">
-        <div class="logo-container">
-            <img src="one_stop_shopping_enhanced.png" alt="Logo" class="logo">
-            <span class="tagline">One Stop Shopping</span>
+                <li><a href="index5.html" target="_blank">Quiz</a></li>
+
+                <!-- Link to specific YouTube video for C++ programming -->
+                <li><a href="index4.html" target="_blank">Feedback</a></li>
+
+            </ul> 
+        </nav>
+    
+
+
+        
+        <button class="profile-btn" id="e-btn">SZ</button>
+    <p id="platform-text">Find your Interests</p>
+    </header>
+    <h2 style="text-align: center; margin-top:1%;transform :">Master the Art of Coding</h2>
+    <div class="content">
+        <img src="study website image.jpg" >
         </div>
-        <div class="navbar"> 
-            <a href="index2.html">Men</a>
-            <a href="index3.html">Women</a>
-            <a href="index4.html">Electronics</a>
-            <a href="index5.html">Accessories</a>
-        </div>
-        <form id="searchForm">
-            <input type="text" id="searchInput" placeholder="Search for products...">
-            <button type="submit">Search</button>
-        </form>
-            
-        <div id="mainContent">
-            
+        
+    <main>
+      
+          
         </div>
        
-        <div class="essentials">   
-            <a href="login.html">Login</a>
-            <a href="cart.html">Cart</a>
-            <a href="help.html">Help</a>
-        </div>
+            
+            
+            <a href="https://www.geeksforgeeks.org/c-programming-language/" style="text-decoration: none;">
+                <h3 style="position: absolute; left: 13%; top: 45%; transform: translateY(-50%); text-decoration: underline; color: white;" 
+                    onmouseover="this.style.color='blue';" onmouseout="this.style.color='white';">
+                    C
+                </h3>
+            </a>
+            <a href="https://www.geeksforgeeks.org/c-plus-plus/" style="text-decoration: none;">
+            <h3 style="position: absolute; left: 13%; top: 50%; transform: translateY(-50%);  text-decoration: underline;color: white;" 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='white';">C++</h3>
+            </a>
+            <a href="https://www.javatpoint.com/java-tutorial" style="text-decoration: none;">
+            <h3 style="position: absolute; left: 13%; top:55%; transform: translateY(-50%);  text-decoration: underline; color:white;" 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='white';">Java</h3>
+            </a>
+            <a href="https://www.w3schools.com/html/" style="text-decoration: none;">
+
+            <h3 style="position: absolute; right: 30%; top: 45%; transform: translateY(-50%);  text-decoration: underline;  color: white;" 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='white';">Html</h3>
+            </a>
+            <a href="https://www.w3schools.com/css/default.asp" style="text-decoration: none;">
+
+            <h3 style="position: absolute; right: 30%; top: 50%; transform: translateY(-50%);  text-decoration: underline;  color: white;" 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='white';">CSS</h3>
+            </a>
+            <a href="https://www.w3schools.com/java/default.asp" style="text-decoration: none;">
+
+            <h3 style="position: absolute; right: 28%; top: 55%; transform: translateY(-50%);  text-decoration: underline;  color: white;" 
+            onmouseover="this.style.color='blue';" onmouseout="this.style.color='white';">Javascript</h3>
+            </a>
+            <a href="https://www.youtube.com/watch?v=KJgsSFOSQv0" target="_blank">
+            <img src="cl.jpg" alt="Rounded Image" class="rounded-image">
+            </a>
+        <a href="https://www.youtube.com/watch?v=vLnPwxZdW4Y" target="_blank">
+            <img src="ccl.png" alt="Rounded Image" class="rounded-image1">
+            </a>
+            <a href="https://youtu.be/xTtL8E4LzTQ?si=RiAG-uCP2wAre2Wa" target="_blank">
+
+            <img src="jl.jpg" alt="Rounded Image" class="rounded-image2">
+            </a>
+            <a href="https://youtu.be/HcOc7P5BMi4?si=33Nu4x-wBLX4AXC7" target="_blank">
+            <img src="h5l.webp" alt="Rounded Image" class="rounded-image3">
+            </a>
+            <a href="https://www.youtube.com/watch?v=1Rs2ND1ryYc" target="_blank">
+            <img src="csl.png" alt="Rounded Image" class="rounded-image4">
+            </a>
+            <a href="https://www.youtube.com/watch?v=upDLs1sn7g4" target="_blank">
+            <img src="jssl.png" alt="Rounded Image" class="rounded-image5">
+            </a>
+            
+
+        </section>
+    </main>
+    
+    <script src="file.js"></script>
+
+    <a href="index2.html" class="bottom-right-button">Next Page</a>
+    <a href="index5.html" class="bottom-left-text">Take the quiz</a>
+   
     </div>
-
-    <!-- Carousel Section -->
-    <div class="carousel" id="carousel" >
-        <img src="back1.1.avif" alt="Handbags"  onclick="window.location.href='carousel1.html';">
-        <img src="back7.jpg" alt="Shoes" onclick="window.location.href='carousel2.html';">
-        <img src="back6.webp" alt="Watches" onclick="window.location.href='carousel3.html';">
-        <img src="back5.jpg" alt="Shoes" onclick="window.location.href='carousel4.html';">
-        <button class="arrow left" onclick="prevSlide()">&#10094;</button>
-        <button class="arrow right" onclick="nextSlide()">&#10095;</button>
-    </div>
-    <div class="dots" id="dots"></div>
-
-    <!-- Coupon Zone Section -->
-    <div class="coupon-zone">
-        <div class="coupon-content">
-            <h1>Welcome to the Coupon Zone!</h1>
-            <p>Grab exclusive discounts on your favorite items.</p>
-            <img src="discountcoupon.png" alt="Coupon Zone" onclick="window.location.href='index6.html'">
-            <button onclick="window.location.href='index6.html'">Shop Now</button>
-        </div>
-    </div>
-
-    <!-- Shop by Category Section -->
-    <div class="shop-by-category">
-        <span>Shop by Category</span>
-        <div class="categories">
-            <a href="index3.html"><img src="shi.jpg" alt="Category 1"></a>
-            <a href="levis.html"><img src="shi1.jpg" alt="Category 2"></a>
-            <a href="index2.html"><img src="shi2.jpg" alt="Category 3"></a>
-            <a href="carousel4.html"><img src="shi3.avif" alt="Category 4"></a>
-            <a href="wsahing.html"><img src="shi4.jpg" alt="Category 4"></a>
-            <a href="phones.html"><img src="shi7.avif" alt="Category 5"></a>
-            <a href="laptop.html"><img src="shi8.jpg" alt="Category 5"></a>
-
-        </div>
-    </div>
-    <!-- Footer Section -->
-<footer style="background-color: #f8f8f8; padding: 20px 40px; font-family: Arial, sans-serif; color: #333;">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-        <!-- Online Shopping Links -->
-        <div>
-            <h3 style="font-size: 16px; margin-bottom: 10px;">Online Shopping</h3>
-            <ul style="list-style: none; padding: 0; line-height: 1.8;">
-                <li><a href="index2.html" style="text-decoration: none; color: #007BFF;">Men</a></li>
-                <li><a href="index3.html" style="text-decoration: none; color: #007BFF;">Women</a></li>
-                <li><a href="index4.html" style="text-decoration: none; color: #007BFF;">Electronics</a></li>
-                <li><a href="index5.html" style="text-decoration: none; color: #007BFF;">Accessories</a></li>
-            </ul>
-        </div>
-
-        <!-- Customer Policies -->
-        <div>
-            <h3 style="font-size: 16px; margin-bottom: 10px;">Customer Policies</h3>
-            <ul style="list-style: none; padding: 0; line-height: 1.8;">
-                <li><a href="contact.html" style="text-decoration: none; color: #007BFF;">Contact Us</a></li>
-                <li><a href="faq.html" style="text-decoration: none; color: #007BFF;">FAQ</a></li>
-                <li><a href="shipping.html" style="text-decoration: none; color: #007BFF;">Shipping</a></li>
-                <li><a href="returns.html" style="text-decoration: none; color: #007BFF;">Returns</a></li>
-            </ul>
-        </div>
-
-        <!-- Guarantee Section -->
-        <div style="max-width: 250px;">
-            <h3 style="font-size: 16px; margin-bottom: 10px;">100% Guarantee</h3>
-            <p style="font-size: 14px; color: #555; line-height: 1.6;">
-                <strong>100% Genuine Products:</strong> We ensure that all products are authentic and sourced directly from trusted suppliers.
-            </p>
-        </div>
-    </div>
-    <!-- Bottom Line -->
-    <div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; text-align: center; font-size: 14px; color: #666;">
-        &copy; 2025 One Stop Shopping. All Rights Reserved.
-    </div>
-
-</body>
-</html>
-</footer>
-
-<script>
-    const slides = document.querySelectorAll(".carousel img");
-    const dotsContainer = document.getElementById("dots");
-    let currentSlide = 0;
-
-    function createDots() {
-        slides.forEach((_, index) => {
-            const dot = document.createElement("span");
-            dot.classList.add("dot");
-            dot.onclick = () => goToSlide(index);
-            dotsContainer.appendChild(dot);
-        });
-    }
-
-    function showSlide(index) {
-        slides.forEach((slide, idx) => {
-            slide.style.display = idx === index ? "block" : "none";
-        });
-
-        const dots = document.querySelectorAll(".dot");
-        dots.forEach((dot, idx) => {
-            dot.classList.remove("active");
-            if (idx === index) {
-                dot.classList.add("active");
-            }
-        });
-    }
-
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
-
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
-    }
-
-    function goToSlide(index) {
-        currentSlide = index;
-        showSlide(currentSlide);
-    }
-
-    setInterval(nextSlide, 3000);
-    createDots();
-    showSlide(currentSlide);
-      
-
-document.getElementById('searchForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent form submission from refreshing the page
-
-    const query = document.getElementById('searchInput').value.trim().toLowerCase();
-
-    // Map keywords to specific links
-    const routes = {
-        men: 'index2.html',
-        shirts: 'index2.html',
-        women: 'index3.html',
-        kurtas: 'index3.html',
-        electronics: 'index4.html',
-        phones: 'index4.html',
-        'washing machines': 'index4.html',
-        accessories: 'index5.html',
-        scarf: 'index5.html',
-        jewellery: 'index5.html'
-    };
-
-    // Check if the query matches any key in the routes
-    if (routes[query]) {
-        window.location.href = routes[query]; // Redirect to the corresponding page
-    } else {
-        alert('No results found. Please try searching for valid categories or products.');
-    }
-});
-</script>
+   </body>
+</html> 
